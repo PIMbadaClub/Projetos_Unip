@@ -1,0 +1,73 @@
+@base = http://localhost:5080/api/produtos
+
+### 1) Criar
+POST {{base}}
+Content-Type: application/json
+
+{ "nome": "Teclado mecânico", "preco": 349.90 }
+
+### 2) Criar inválido
+POST {{base}}
+Content-Type: application/json
+
+{ "nome": "TV", "preco": 0 }
+
+### 3) Listar
+GET {{base}}
+
+### 4) Buscar existente
+GET {{base}}/1
+
+### 5) Buscar inexistente
+GET {{base}}/999
+
+### 6) Remover
+DELETE {{base}}/1
+
+### 7) Remover de novo
+DELETE {{base}}/1
+
+
+### ===== Parte 4: testes extras =====
+
+### 8) POST sem o campo nome
+POST {{base}}
+Content-Type: application/json
+
+{ "preco": 10 }
+
+### 9) POST sem a linha Content-Type
+POST {{base}}
+
+{ "nome": "Mouse", "preco": 59.90 }
+
+### 10) GET com id que não é número
+GET {{base}}/abc
+
+### 11) POST com preço negativo
+POST {{base}}
+Content-Type: application/json
+
+{ "nome": "Monitor", "preco": -5 }
+
+
+### ===== Desafio: PUT =====
+
+### 12) Criar um produto para alterar
+# @name criado
+POST {{base}}
+Content-Type: application/json
+
+{ "nome": "Headset", "preco": 199.90 }
+
+### 13) Alterar existente (usa o id devolvido no teste 12)
+PUT {{base}}/{{criado.response.body.$.id}}
+Content-Type: application/json
+
+{ "nome": "Headset sem fio", "preco": 249.90 }
+
+### 14) Alterar inexistente
+PUT {{base}}/999
+Content-Type: application/json
+
+{ "nome": "Não existe", "preco": 10 }
